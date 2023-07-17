@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import javax.mail.MessagingException;
 
@@ -33,6 +34,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import com.titusfortner.logging.SeleniumLogger;
 
 import pageobjects.AccountListPage;
 import pageobjects.LightningLoginPage;
@@ -86,6 +88,8 @@ public class BaseTest implements ExcelReader, PropertyReader {
 	@Parameters({ "browserType" })
 	public void setupWebDriver(@Optional("chrome") String browserType) throws IOException {
 		// Fetch all the test data like URL, UserID and Passwords from config.json file
+//		SeleniumLogger seleniumLogger = new SeleniumLogger();
+//		seleniumLogger.setLevel(Level.FINE);
 		readConfigJsonFile();
 
 		if ((driver == null)) {
