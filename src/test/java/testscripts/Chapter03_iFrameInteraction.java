@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
  * @date: 29-06-2023
  * @purpose: This test covers the opening for a browser with Google Chrome 👼
  */
-public class Chapter03_TableInteraction {
+public class Chapter03_iFrameInteraction {
 	@Test(priority = 1)
 	public void tableReader() throws Exception {
 		// Creating a webdriver instance
@@ -22,19 +22,13 @@ public class Chapter03_TableInteraction {
 	    driver.get("https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_table_test");
 	    driver.switchTo().frame(0);
 	    Thread.sleep(10000);
-	 // Locate the table element
-        WebElement tableElement = driver.findElement(By.xpath("//table"));
-        // Access all rows within the table
-        List<WebElement> rows = tableElement.findElements(By.tagName("tr"));
-        // Loop through rows and access cells (columns)
-        for (WebElement row : rows) {
-            List<WebElement> cells = row.findElements(By.tagName("td"));
-            // Accessing data from each cell and printing it
-            for (WebElement cell : cells) {
-                System.out.print(cell.getText() + "\t");
-            }
-            System.out.println(); // Move to the next row
-        }
+	    WebElement columnheader1 = driver.findElement(By.xpath("//th[normalize-space()='Month']"));
+	    //getting the text value 
+	   System.out.println("First Column header is " + columnheader1.getText());
+	    Thread.sleep(3000);
+	 // Switch back to the main page
+	    driver.switchTo().defaultContent();
+
 	   driver.quit();
 	}
 }
