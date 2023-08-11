@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="demo">
+<h1>The magical box</h1>
+
+</div>
+
+<script>
+
+var next = 0;
+
+      function addMore() {
+        var box = document.createElement('DIV');
+        box.id = 'box' + next++;
+        box.className = 'circle';
+        box.di = '100px';
+        box.style.height = '100px';
+        box.style.backgroundColor = 'yellow';
+        box.style.border = '2px solid black';
+        box.style.margin = '5px';
+
+        window.setTimeout(function() {
+          document.body.appendChild(box);
+        }, Math.random()*10000);
+      }
+
+      function reveal() {
+        var elem = document.getElementById('revealed');
+        window.setTimeout(function() {
+          elem.style.display = '';
+        }, 1000);
+      }
+</script>
+ <input id="adder" type="button" value="Wait randomly, hahaha" onclick="addMore()"/>
+
+    <input id="reveal" type="button" value="Wait 1 second" onclick="reveal();" />
+
+    <input id="revealed" style="display:none;" />
+</body>
+</html>
