@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
     .dot {
       height: 25px;
       width: 25px;
@@ -10,44 +10,43 @@
       border-radius: 50%;
       display: inline-block;
     }
-    </style>
-    </head>
+  </style>
+</head>
 <body>
 <div id="demo">
-<h1>The magical box</h1>
-<span class="dot"></span>
+  <h1>The magical box</h1>
+  <span class="dot"></span>
 </div>
 
 <script>
+  var next = 0;
 
-var next = 0;
+  function addMore() {
+    var box = document.createElement('div'); // Corrected 'DIV' to 'div'
+    box.id = 'box' + next++;
+    box.className = 'circle'; // Changed class name to 'circle' as defined in CSS
+    box.style.height = '100px';
+    box.style.width = '100px'; // Corrected property name from 'box.di' to 'box.style.width'
+    box.style.backgroundColor = 'yellow';
+    box.style.border = '2px solid black';
+    box.style.margin = '5px';
 
-      function addMore() {
-        var box = document.createElement('DIV');
-        box.id = 'box' + next++;
-        box.className = 'circle';
-        box.di = '100px';
-        box.style.height = '100px';
-        box.style.backgroundColor = 'yellow';
-        box.style.border = '2px solid black';
-        box.style.margin = '5px';
+    window.setTimeout(function () {
+      document.body.appendChild(box);
+    }, Math.random() * 10000);
+  }
 
-        window.setTimeout(function() {
-          document.body.appendChild(box);
-        }, Math.random()*10000);
-      }
-
-      function reveal() {
-        var elem = document.getElementById('revealed');
-        window.setTimeout(function() {
-          elem.style.display = '';
-        }, 1000);
-      }
+  function reveal() {
+    var elem = document.getElementById('revealed');
+    window.setTimeout(function () {
+      elem.style.display = 'block'; // Set display to 'block' to make it visible
+    }, 1000);
+  }
 </script>
- <input id="adder" type="button" value="Wait randomly, hahaha" onclick="addMore()"/>
+<input id="adder" type="button" value="Wait randomly, hahaha" onclick="addMore()" />
 
-    <input id="reveal" type="button" value="Wait 1 second" onclick="reveal();" />
+<input id="reveal" type="button" value="Wait 1 second" onclick="reveal();" />
 
-    <input id="revealed" style="display:none;" />
+<div id="revealed" style="display:none;">Revealed!</div> <!-- Added content to the revealed div -->
 </body>
 </html>
