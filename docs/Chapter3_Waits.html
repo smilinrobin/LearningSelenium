@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .circle { /* Define the circle class */
+      height: 100px;
+      width: 100px;
+      background-color: yellow;
+      border-radius: 50%; /* Use border-radius to make it a circle */
+      border: 2px solid black;
+      margin: 5px;
+    }
+  </style>
+</head>
 <body>
 <div id="demo">
   <h1>The magical box</h1>
@@ -9,13 +22,9 @@
   var next = 0;
 
   function addMore() {
-    var box = document.createElement('div'); // Corrected 'DIV' to 'div'
+    var box = document.createElement('div');
     box.id = 'box' + next++;
-    box.className = 'circle'; // Changed class name to 'circle' as defined in CSS
-    box.style.height = '100px';
-    box.style.width = '100px'; // Corrected property name from 'box.di' to 'box.style.width'
-    box.style.backgroundColor = 'yellow';
-    box.style.border = '2px solid black';
+    box.className = 'circle'; // Use the updated class name
     box.style.margin = '5px';
 
     window.setTimeout(function () {
@@ -26,7 +35,7 @@
   function reveal() {
     var elem = document.getElementById('revealed');
     window.setTimeout(function () {
-      elem.style.display = 'block'; // Set display to 'block' to make it visible
+      elem.style.display = 'block';
     }, 1000);
   }
 </script>
@@ -34,5 +43,6 @@
 
 <input id="reveal" type="button" value="Wait 1 second" onclick="reveal();" />
 
-<input id="revealed" style="display:none;"></body>
+<input id="revealed" style="display:none;">
+</body>
 </html>
