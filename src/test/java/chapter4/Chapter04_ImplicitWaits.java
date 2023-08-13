@@ -1,5 +1,6 @@
 package chapter4;
-import java.util.List;
+
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,16 +15,23 @@ import org.testng.annotations.Test;
  */
 public class Chapter04_ImplicitWaits {
 	@Test(priority = 1)
-	public void xPathLocatorExample() throws Exception {
+	public void implicitWaitExample() throws Exception {
 		// Creating a webdriver instance
 //
-	  WebDriver driver = new ChromeDriver();
-	    //Navigating to Salesforce Login page
-	    driver.get("https://login.salesforce.com/");
-	    WebElement inputfield = driver.findElement(By.xpath("//input[@id='username']"));
-	   System.out.println("Location of the input field on screen is " +inputfield.getLocation()); 
-	    List<WebElement> links = driver.findElements(By.xpath("//a"));
-		   System.out.println("Count of all the links is " +links.size());  
-	   driver.quit();
+		WebDriver driver = new ChromeDriver();
+
+		// Navigating to sample page
+		driver.get("https://smilinrobin.github.io/LearningSelenium/docs/Chapter3_Waits.html");
+		// Setting up Implicit wait
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+		WebElement inputboxbutton = driver.findElement(By.id("implicitbutton"));
+		inputboxbutton.click();
+		WebElement inputbox = driver.findElement(By.id("inputbox"));
+		System.out.println("Tag name of the displayed box on screen is " + inputbox.getTagName());
+		inputbox.sendKeys("Input value in the box");
+		// Added sleep below so that the user can see if the text is correctly input to
+		// the box
+		Thread.sleep(3000);
+		driver.quit();
 	}
 }
