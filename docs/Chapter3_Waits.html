@@ -16,7 +16,7 @@
 <body>
 	<div id="header">
 		<h1>Wait strategy samples</h1>
-		<h2>Try automating the below boxes 😇</h2>
+		<h2>Try automating the validation of below cirlce or input box 😇</h2>
 		<h3>Note: Reload to reset the state of the page</h3>
 
 
@@ -26,18 +26,18 @@
   var next = 0;
 
   function addMore() {
-    var box = document.createElement('div');
-    box.id = 'box' + next++;
-    box.className = 'circle'; // Use the updated class name
-    box.style.margin = '5px';
+    var circle = document.createElement('div');
+    circle.id = 'circle' + next++;
+    circle.className = 'circle'; // Use the updated class name
+    circle.style.margin = '5px';
 
     window.setTimeout(function () {
-      document.body.appendChild(box);
+      document.body.appendChild(circle);
     }, Math.random() * 10000);
   }
 
   function reveal() {
-    var elem = document.getElementById('revealed');
+    var elem = document.getElementById('inputbox');
     window.setTimeout(function () {
       elem.style.display = 'block';
     }, 1000);
@@ -47,6 +47,6 @@
 		value="Wait randomly to get a yellow circle" onclick="addMore()" />
 	<input id="implicitbutton" type="button"
 		value="Wait 1 second to get an input box" onclick="reveal();" />
-	<input id="revealed" style="display: none;">
+	<input id="inputbox" style="display: none;">
 </body>
 </html>
