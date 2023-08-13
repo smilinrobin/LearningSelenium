@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    .circle { /* Define the circle class */
-      height: 100px;
-      width: 100px;
-      background-color: yellow;
-      border-radius: 50%; /* Use border-radius to make it a circle */
-      border: 2px solid black;
-      margin: 5px;
-    }
-  </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.circle { /* Define the circle class */
+	height: 100px;
+	width: 100px;
+	background-color: yellow;
+	border-radius: 50%; /* Use border-radius to make it a circle */
+	border: 2px solid black;
+	margin: 5px;
+}
+</style>
 </head>
 <body>
-<div id="header">
-  <h1>Wait strategy samples</h1>
-  <h2>Try automating the below boxes 😇</h2>
-  <h3>Note: Reload to reset the state of the page</h3>
+	<div id="header">
+		<h1>Wait strategy samples</h1>
+		<h2>Try automating the below boxes 😇</h2>
+		<h3>Note: Reload to reset the state of the page</h3>
 
 
-</div>
+	</div>
 
-<script>
+	<script>
   var next = 0;
 
   function addMore() {
@@ -43,8 +43,10 @@
     }, 1000);
   }
 </script>
-<input id="adder" type="button" value="Wait randomly to get a yellow circle" onclick="addMore()" />
-<input id="reveal" type="button" value="Wait 1 second to get an input box" onclick="reveal();" />
-<input id="revealed" style="display:none;">
+	<input id="adder" type="button"
+		value="Wait randomly to get a yellow circle" onclick="addMore()" />
+	<input id="reveal" type="button"
+		value="Wait 1 second to get an input box" onclick="reveal();" />
+	<input id="revealed" style="display: none;">
 </body>
 </html>

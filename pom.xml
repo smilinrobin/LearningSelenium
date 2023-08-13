@@ -1,12 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.testzeus</groupId>
 	<artifactId>Test_Zeus</artifactId>
 	<version>1.1.0-SNAPSHOT</version>
 	<name>TestZeus</name>
 	<description>UI and API testing framework built specifically for Salesforce</description>
-	 <url>http://testzeus.com</url>
-	
+	<url>http://testzeus.com</url>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,18 +25,18 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<version.commons-io>2.4</version.commons-io>
-		
+
 	</properties>
 
 	<dependencies>
-	<dependency>
-  <groupId>com.testzeus</groupId>
-  <artifactId>Test_Zeus</artifactId>
-  <version>1.0.2</version>
-</dependency>
+		<dependency>
+			<groupId>com.testzeus</groupId>
+			<artifactId>Test_Zeus</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -47,16 +49,16 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-  <groupId>com.titusfortner</groupId>
-  <artifactId>selenium-logger</artifactId>
-  <version>1.1</version>
-</dependency>
-	<dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.11.0</version>
-        </dependency>
-<dependency>
+			<groupId>com.titusfortner</groupId>
+			<artifactId>selenium-logger</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.11.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.2</version>
@@ -66,11 +68,11 @@
 			<artifactId>httpcore</artifactId>
 			<version>${apache.httpcomponents.core.version}</version>
 		</dependency>
-<dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>31.0.1-jre</version>
-    </dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>31.0.1-jre</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -98,7 +100,7 @@
 			<version>2.4.0</version>
 		</dependency>
 
-	
+
 
 		<dependency>
 			<groupId>net.sf.supercsv</groupId>
@@ -155,51 +157,51 @@
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-core</artifactId>
-    <version>2.12.3</version>
-</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.12.3</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-annotations</artifactId>
-    <version>2.12.3</version>
-</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.12.3</version>
+		</dependency>
 
-<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.12.3</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.12.3</version>
+		</dependency>
 
 
 
-  <dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-api</artifactId>
-    <version>2.16.0</version>
-  </dependency>
-  <dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-core</artifactId>
-    <version>2.16.0</version>
-  </dependency> 
-  <!--https://mvnrepository.com/artifact/io.netty/netty-handler-->
-<dependency>
-<groupId>io.netty</groupId>
-<artifactId>netty-handler</artifactId>
-<version>4.1.90.Final</version>
-</dependency>
-<!-- https://mvnrepository.com/artifact/com.browserup/browserup-proxy-core -->
-<dependency>
-    <groupId>com.browserup</groupId>
-    <artifactId>browserup-proxy-core</artifactId>
-    <version>2.1.2</version>
-</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.16.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.16.0</version>
+		</dependency>
+		<!--https://mvnrepository.com/artifact/io.netty/netty-handler -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-handler</artifactId>
+			<version>4.1.90.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.browserup/browserup-proxy-core -->
+		<dependency>
+			<groupId>com.browserup</groupId>
+			<artifactId>browserup-proxy-core</artifactId>
+			<version>2.1.2</version>
+		</dependency>
 
 	</dependencies>
 
