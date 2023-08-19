@@ -17,6 +17,7 @@ public class OrangeHRMLoginPage {
 
 	public OrangeHRMLoginPage(WebDriver driver) {
 		this.driver = driver;
+		// Validation for page
 		if (!driver.getTitle().equals("OrangeHRM")) {
 			throw new IllegalStateException("This is not Log In Page," + " current page is: " + driver.getCurrentUrl());
 		}
@@ -34,6 +35,5 @@ public class OrangeHRMLoginPage {
 		driver.findElement(loginlocator).click();
 		// Returning the instance of Homepage for fluent style of programming
 		return new OrangeHRMHomePage(driver);
-
 	}
 }
