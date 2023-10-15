@@ -10,16 +10,13 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-
 import org.openqa.selenium.safari.SafariDriver;
 
 //import io.github.bonigarcia.wdm.WebDriverManager;
-
 
 @SuppressWarnings("deprecation")
 public class WebDriverFactory {
@@ -27,7 +24,7 @@ public class WebDriverFactory {
 	/*
 	 * @author: Robin Gupta
 	 * 
-	 * @Date: 29 September 2021
+	 * @Date: 29 September 2023
 	 * 
 	 * @Purpose: This class helps in setting up the webdriver dynamically as per the
 	 * parameters passed from BaseTest class. 🏭
@@ -58,24 +55,26 @@ public class WebDriverFactory {
 
 	public static WebDriver createInstance(URL hubUrl, String browserName) throws IOException {
 		WebDriver driver = null;
-	try {	if (browserName.equalsIgnoreCase("firefox")) {
-			driver = new FirefoxDriver(createFirefoxProfile());
-		} else if (browserName.equalsIgnoreCase("chrome")) {
-		    System.setProperty("webdriver.chrome.driver","C:\\Users\\robin.gupta\\OneDrive\\Desktop\\Project 70\\chromedriver_win32\\chromedriver.exe");
-		    driver = new ChromeDriver();
-		} else if (browserName.equalsIgnoreCase("edge")) {
-driver = new EdgeDriver();
-		} else if (browserName.equalsIgnoreCase("safari") && isSafariSupportedPlatform()) {
-			driver = new SafariDriver();
+		try {
+			if (browserName.equalsIgnoreCase("firefox")) {
+				driver = new FirefoxDriver(createFirefoxProfile());
+			} else if (browserName.equalsIgnoreCase("chrome")) {
+				// System.setProperty("webdriver.chrome.driver","C:\\Users\\robin.gupta\\OneDrive\\Desktop\\Project
+				// 70\\chromedriver_win32\\chromedriver.exe");
+				driver = new ChromeDriver();
+			} else if (browserName.equalsIgnoreCase("edge")) {
+				driver = new EdgeDriver();
+			} else if (browserName.equalsIgnoreCase("safari") && isSafariSupportedPlatform()) {
+				driver = new SafariDriver();
+			}
+
 		}
-	
-	}
-	
-	catch (Exception e) {
-		System.out.println("Error creating browser session --" + e.getLocalizedMessage());
-	}
-	log.info("WebDriverFactory created an instance of WebDriver for: " + browserName);
-	return driver;
+
+		catch (Exception e) {
+			System.out.println("Error creating browser session --" + e.getLocalizedMessage());
+		}
+		log.info("WebDriverFactory created an instance of WebDriver for: " + browserName);
+		return driver;
 	}
 
 	static boolean isSafariSupportedPlatform() {
