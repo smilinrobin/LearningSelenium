@@ -9,8 +9,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 import javax.mail.MessagingException;
 
@@ -34,10 +32,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import com.titusfortner.logging.SeleniumLogger;
 
 import pageobjects.AccountListPage;
 import pageobjects.LightningLoginPage;
+import pageobjects.OrangeHRMHomePage;
+import pageobjects.OrangeHRMLoginPage;
 import testzeus.base.GetSFApps;
 import testzeus.base.HTTPClientWrapper;
 import testzeus.base.PageBase;
@@ -50,15 +49,16 @@ import testzeus.base.PageBase;
 
 public class BaseTest implements ExcelReader, PropertyReader {
 
-	public static final Logger logger = LogManager.getLogger(BaseTest.class);
+	public static final Logger logger = LogManager.getLogger();
 	protected static WebDriver driver;
 
 	private static final String InstalledVersionDetailPage = null;
 
-
 	protected static Actions action;
 	protected LightningLoginPage lightningloginpage;
 	protected AccountListPage accountlistpage;
+	protected OrangeHRMLoginPage loginpage;
+	protected OrangeHRMHomePage homepage;
 
 	public static String SFBaseURL; // This is the base URL like https://test-ea.lightning.force.com/
 
@@ -71,25 +71,21 @@ public class BaseTest implements ExcelReader, PropertyReader {
 	public static String SFUserId;
 	public static String SFPassword;
 	public static String SFAPIPASSWORDSTRING_UAT;
-	public static String SFAPIUSERNAME_UAT ;
+	public static String SFAPIUSERNAME_UAT;
 	public static String SFAPITOKEN_UAT;
 	public static String SFAPIPASSWORD_UAT;
 	public static String SFAPILOGINURL_UAT;
 	public static String SFAPIGRANTSERVICE = "/services/oauth2/token?grant_type=password";
 	public static String SFAPICLIENTID_UAT;
-	public  static String SFAPICLIENTSECRET_UAT;
-
-
-	
-
-	
+	public static String SFAPICLIENTSECRET_UAT;
 
 	@BeforeSuite(alwaysRun = true)
 	@Parameters({ "browserType" })
 	public void setupWebDriver(@Optional("chrome") String browserType) throws IOException {
-		// Fetch all the test data like URL, UserID and Passwords from config.json file
+		// Below lines are to provide log level at fine grained scale for debugging
 //		SeleniumLogger seleniumLogger = new SeleniumLogger();
 //		seleniumLogger.setLevel(Level.FINE);
+		// Fetch all the test data like URL, UserID and Passwords from config.json file
 		readConfigJsonFile();
 
 		if ((driver == null)) {
@@ -98,13 +94,13 @@ public class BaseTest implements ExcelReader, PropertyReader {
 			action = new Actions(driver);
 			pageFactory = new PageFactory(driver);
 
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
 
 			System.out.println("Window width: " + driver.manage().window().getSize().getWidth());
 			System.out.println("Window height: " + driver.manage().window().getSize().getHeight());
 		}
 	}
+
 	@BeforeTest(alwaysRun = true)
 	public void cleanTestSetup() {
 		driver.manage().deleteAllCookies();
@@ -150,7 +146,7 @@ public class BaseTest implements ExcelReader, PropertyReader {
 		logger.info("Ending Test  ---->" + method.getName());
 
 	}
-	
+
 	@AfterClass(alwaysRun = true)
 	public void deleteAllCookies() {
 		// Logging out of the Salesforce APIs
@@ -199,7 +195,6 @@ public class BaseTest implements ExcelReader, PropertyReader {
 		}
 	}
 
-
 	private void readConfigJsonFile() {
 		{ // Here the commonly used Test data is read from the config.json file
 			// UAT stands for User Acceptance Testing and is a short hand for the
@@ -208,12 +203,12 @@ public class BaseTest implements ExcelReader, PropertyReader {
 			try {
 
 				String sPath = new java.io.File(".").getCanonicalPath();
-				Log.info("Path: " + sPath);
+				logger.info("Path: " + sPath);
 				File jsonFile = new File(sPath + File.separator + "src" + File.separator + "main" + File.separator
 						+ "resources" + File.separator + "config.json");
 				String salesforce_Lighteningenv = "Salesforce_Lightening";
 
-				Log.info("Reading Environment variables from json file");
+				logger.info("Reading Environment variables from json file");
 
 				env = (env == null) ? salesforce_Lighteningenv : env;
 
@@ -222,30 +217,31 @@ public class BaseTest implements ExcelReader, PropertyReader {
 				SFPassword = (String) JsonPath.read(jsonFile, "$.environments." + env + ".UAT.passwd");
 				// Credentials for using the Connected app and accessing data via REST API
 				SFAPIUSERNAME_UAT = SFUserId;
-				//In the above line the API user name and UI login user name are same, but they could be different in your scenario and therefore kindly adjust as required
+				// In the above line the API user name and UI login user name are same, but they
+				// could be different in your scenario and therefore kindly adjust as required
 
 				SFAPITOKEN_UAT = (String) JsonPath.read(jsonFile, "$.environments." + env + ".UAT.apitoken");
 
-				//SFAPITOKEN_UAT = "QhhZNRScVAPz9GpMkhy8jVsy";
+				SFAPIPASSWORDSTRING_UAT = SFPassword;
 
-			SFAPIPASSWORDSTRING_UAT = SFPassword;
-			
-			// password needs to be appended with token as per : //
-			// https://stackoverflow.com/questions/38334027/salesforce-oauth-authentication-bad-request-error
+				// password needs to be appended with token as per : //
+				// https://stackoverflow.com/questions/38334027/salesforce-oauth-authentication-bad-request-error
 
-			SFAPIPASSWORD_UAT = SFAPIPASSWORDSTRING_UAT + SFAPITOKEN_UAT;
+				SFAPIPASSWORD_UAT = SFAPIPASSWORDSTRING_UAT + SFAPITOKEN_UAT;
 
-			SFAPILOGINURL_UAT = SFBaseURL;
+				SFAPILOGINURL_UAT = SFBaseURL;
 
-			//final String SFAPILOGINURL_UAT = "https://testzeus2-dev-ed.my.salesforce.com";
+				// final String SFAPILOGINURL_UAT =
+				// "https://testzeus2-dev-ed.my.salesforce.com";
 
-			// Client id is the consumerkey for the connected app
-		 SFAPICLIENTID_UAT = (String) JsonPath.read(jsonFile, "$.environments." + env + ".UAT.SFAPICLIENTID_UAT");
+				// Client id is the consumerkey for the connected app
+				SFAPICLIENTID_UAT = (String) JsonPath.read(jsonFile,
+						"$.environments." + env + ".UAT.SFAPICLIENTID_UAT");
 
-			// Client secret is the consumer secret protected static final String
-			SFAPICLIENTSECRET_UAT = (String) JsonPath.read(jsonFile, "$.environments." + env + ".UAT.SFAPICLIENTSECRET_UAT");
-					
-					
+				// Client secret is the consumer secret protected static final String
+				SFAPICLIENTSECRET_UAT = (String) JsonPath.read(jsonFile,
+						"$.environments." + env + ".UAT.SFAPICLIENTSECRET_UAT");
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -259,11 +255,11 @@ public class BaseTest implements ExcelReader, PropertyReader {
 				// data to it using this method
 
 			String sPath = new java.io.File(".").getCanonicalPath();
-			Log.info("Path: " + sPath);
+			logger.info("Path: " + sPath);
 			File jsonFile = new File(sPath + File.separator + "src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "dynamicdata.json");
 
-			Log.info("Writing URL variables to json file");
+			logger.info("Writing URL variables to json file");
 
 			DocumentContext doc = JsonPath.parse(jsonFile).
 
@@ -286,11 +282,11 @@ public class BaseTest implements ExcelReader, PropertyReader {
 				// from it using this method
 
 			String sPath = new java.io.File(".").getCanonicalPath();
-			Log.info("Path: " + sPath);
+			logger.info("Path: " + sPath);
 			File jsonFile = new File(sPath + File.separator + "src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "dynamicdata.json");
 
-			Log.info("Reading variables from json file");
+			logger.info("Reading variables from json file");
 			return (String) JsonPath.read(jsonFile, path);
 
 		} catch (IOException e) {
@@ -299,12 +295,10 @@ public class BaseTest implements ExcelReader, PropertyReader {
 		}
 	}
 
-	
 	public File captureScreenShot() {
 		return new PageBase(driver).takeScreenshot();
 	}
 
-	
 	@Override
 	public Properties getStaticData() { // Method to read data from static data properties file
 		if (staticData == null) {

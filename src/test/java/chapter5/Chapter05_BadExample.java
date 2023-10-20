@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import pageobjects.OrangeHRMHomePage;
 import pageobjects.OrangeHRMLoginPage;
 
-public class BadExample {
+public class Chapter05_BadExample {
 	@Test(priority = 1)
 	public void loginTest() throws Exception {
 		// Creating a webdriver instance
