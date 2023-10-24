@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
-import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -33,7 +32,6 @@ import com.google.gson.JsonObject;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import pageobjects.AccountListPage;
 import pageobjects.LightningLoginPage;
 import pageobjects.OrangeHRMHomePage;
 import pageobjects.OrangeHRMLoginPage;
@@ -55,10 +53,10 @@ public class BaseTest implements ExcelReader, PropertyReader {
 	private static final String InstalledVersionDetailPage = null;
 
 	protected static Actions action;
-	protected LightningLoginPage lightningloginpage;
-	protected AccountListPage accountlistpage;
+
 	protected OrangeHRMLoginPage loginpage;
 	protected OrangeHRMHomePage homepage;
+	protected LightningLoginPage lightningLoginPage;
 
 	public static String SFBaseURL; // This is the base URL like https://test-ea.lightning.force.com/
 
@@ -117,8 +115,7 @@ public class BaseTest implements ExcelReader, PropertyReader {
 		// Set up the common page objects and fetch the data to be used in most
 		// of the tests using Reflections concept
 
-		lightningloginpage = (LightningLoginPage) pageFactory.getPageObject(LightningLoginPage.class.getName());
-		accountlistpage = (AccountListPage) pageFactory.getPageObject(AccountListPage.class.getName());
+		lightningLoginPage = (LightningLoginPage) pageFactory.getPageObject(LightningLoginPage.class.getName());
 
 		// Below is commented code as reference for reading data from properties file
 		// SFUserId = (String) getStaticData().get("SFLightning.userid");
@@ -136,10 +133,10 @@ public class BaseTest implements ExcelReader, PropertyReader {
 				File source = captureScreenShot();
 				FileUtils.copyFile(source, new File(System.getProperty("user.dir")
 						+ "/target/surefire-reports/FailedScreenShots/" + result.getName() + currentdatetime + ".png"));
-				Reporter.log("Screenshot taken");
+				logger.info("Screenshot taken");
 			} catch (Exception e) {
 
-				Reporter.log("Exception while taking screenshot " + e.getMessage());
+				logger.info("Exception while taking screenshot " + e.getMessage());
 			}
 		}
 		logger.info("*************");
@@ -168,7 +165,7 @@ public class BaseTest implements ExcelReader, PropertyReader {
 
 		} catch (Exception e) {
 
-			Reporter.log("Error while closing child windows" + e.getMessage());
+			logger.info("Error while closing child windows" + e.getMessage());
 
 		}
 
@@ -314,13 +311,13 @@ public class BaseTest implements ExcelReader, PropertyReader {
 					staticData.load(input);
 				}
 			} catch (IOException ex) {
-				TestNGCustomReporter.logbr("error loading staticdata.properties" + ex.getMessage());
+				logger.info("error loading staticdata.properties" + ex.getMessage());
 			} finally {
 				if (input != null) {
 					try {
 						input.close();
 					} catch (IOException e) {
-						TestNGCustomReporter.logbr(("error loading staticdata.properties") + e.getMessage());
+						logger.info(("error loading staticdata.properties") + e.getMessage());
 					}
 				}
 			}

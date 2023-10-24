@@ -9,6 +9,6 @@ public class Chapter05_GoodExample extends BaseTest {
 	public void loginTest() throws Exception {
 
 		// Navigating to sample page
-		lightningloginpage.openHomepage("https://login.salesforce.com/");
+		lightningLoginPage.openHomepage("https://login.salesforce.com/");
 	}
 }
