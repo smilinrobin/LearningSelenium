@@ -46,7 +46,7 @@ public class WebDriverFactory {
 		}
 
 		catch (Exception e) {
-			System.out.println("Error creating browser session --" + e.getLocalizedMessage());
+			log.error("Error creating browser session --" + e.getLocalizedMessage());
 		}
 		log.info("WebDriverFactory created an instance of WebDriver for: " + browserName);
 		return driver;
