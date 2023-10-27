@@ -27,6 +27,8 @@ import java.util.prefs.Preferences;
 
 import javax.imageio.ImageIO;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -66,6 +68,7 @@ public class PageBase {
 	Actions actions = null;
 	protected String default_locale;
 	protected Preferences prefs = Preferences.userRoot().node(this.getClass().getName());;
+	public static final Logger logger = LogManager.getLogger();
 
 	public PageBase(WebDriver driver) {
 		this.driver = driver;
@@ -74,6 +77,11 @@ public class PageBase {
 
 	public WebDriver getWebDriver() {
 		return driver;
+	}
+
+	public WebElement byToWebElementConverter(By bylocator) {
+		return driver.findElement(bylocator);
+
 	}
 
 	public static String OSDetector() {
@@ -96,7 +104,7 @@ public class PageBase {
 		driver.get(homepageURL);
 		// driver.manage().window().setSize(new Dimension(1382,744));
 
-		System.out.println("Opened URL : " + homepageURL);
+		logger.info("Opened URL : " + homepageURL);
 	}
 
 	public void openHomepageWithElement(String homepageURL, WebElement homePageElement) throws Exception {
@@ -136,9 +144,9 @@ public class PageBase {
 
 		// Validating the element after ample waiting
 		if (element.isDisplayed()) {
-			System.out.println("Element Displayed " + element.getText());
+			logger.info("Element Displayed " + element.getText());
 		} else {
-			System.out.println("Element Not Displayed " + element.getText());
+			logger.info("Element Not Displayed " + element.getText());
 		}
 		return element.isDisplayed();
 	}
@@ -150,26 +158,26 @@ public class PageBase {
 
 		// Validating the element after ample waiting
 		if (element.isDisplayed()) {
-			System.out.println("Element found and clicked");
+			logger.info("Element found and clicked");
 			element.click();
 		} else {
-			System.out.println("Element Not Displayed " + element.getText());
+			logger.info("Element Not Displayed " + element.getText());
 		}
 
 	}
 
 	public boolean verifyElementEnabled(WebElement element) {
 		if (element.isEnabled()) {
-			System.out.println("Element Enabled " + element.getText());
+			logger.info("Element Enabled " + element.getText());
 		} else {
-			System.out.println("Element Not Enabled " + element.getText());
+			logger.info("Element Not Enabled " + element.getText());
 		}
 		return element.isEnabled();
 	}
 
 	public void refreshPage() {
 		driver.navigate().refresh();
-		System.out.println("Page Refreshed");
+		logger.info("Page Refreshed");
 	}
 
 	public void closeCurrentBrowser() {
@@ -200,6 +208,12 @@ public class PageBase {
 		wait.until(ExpectedConditions.visibilityOf(elmt));
 	}
 
+	public void explicitWait(By elmt, int timeOutInSeconds) {
+		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
+		logger.info("Waiting for element to be visible" + elmt.toString());
+		wait.until(ExpectedConditions.visibilityOfElementLocated(elmt));
+	}
+
 	public void explicitWaitInMinutes(WebElement elmt, int timeOutInMinutes) {
 		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInMinutes * 60));
 		wait.until(ExpectedConditions.visibilityOf(elmt));
@@ -207,6 +221,7 @@ public class PageBase {
 
 	public void explicitWaitClickable(WebElement elmt, int timeOutInSeconds) {
 		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
+		logger.info("Waiting for element to be clickable" + elmt.toString());
 		wait.until(ExpectedConditions.elementToBeClickable(elmt));
 	}
 
@@ -442,7 +457,7 @@ public class PageBase {
 			display = true;
 		} catch (Exception e) {
 			display = false;
-			System.out.println("Element not found");
+			logger.info("Element not found");
 		}
 
 		return display;
@@ -490,7 +505,7 @@ public class PageBase {
 			Alert alert = driver.switchTo().alert();
 			alert.accept();
 		} catch (Exception e) {
-			System.out.println("Alert not found on the page");
+			logger.info("Alert not found on the page");
 		}
 
 	}
@@ -509,7 +524,7 @@ public class PageBase {
 	public void selectValueByVisibleText(WebElement wb, String visibletext) {
 		Select select = new Select(wb);
 		select.selectByVisibleText(visibletext);
-		System.out.println("Selected value " + visibletext);
+		logger.info("Selected value " + visibletext);
 	}
 
 	public void getAllOptions(WebElement wb) {
@@ -517,21 +532,21 @@ public class PageBase {
 		// select.selectByVisibleText(visibletext);
 		List<WebElement> options = select.getOptions();
 		for (WebElement we : options) {
-			System.out.println(we.getText());
+			logger.info(we.getText());
 		}
-		System.out.println("Option values " + select.getOptions());
+		logger.info("Option values " + select.getOptions());
 	}
 
 	public void selectValueByIndex(WebElement ele, int index) {
 		Select select = new Select(ele);
 		select.selectByIndex(index);
-		System.out.println("Selected value " + select.getAllSelectedOptions().get(index));
+		logger.info("Selected value " + select.getAllSelectedOptions().get(index));
 	}
 
 	public void selectValue(WebElement ele, String value) {
 		Select select = new Select(ele);
 		select.selectByValue(value);
-		System.out.println("Selected value : " + value);
+		logger.info("Selected value : " + value);
 	}
 
 	public void enterValue(WebElement element, String value) {
@@ -540,7 +555,7 @@ public class PageBase {
 			element.clear();
 		}
 		element.sendKeys(value);
-		System.out.println("Entered value " + value);
+		logger.info("Entered value " + value);
 	}
 
 	public void enterValueTextArea(WebElement element, String value) {
@@ -549,7 +564,7 @@ public class PageBase {
 			element.clear();
 		}
 		element.sendKeys(value + Keys.ENTER);
-		System.out.println("Entered value " + value);
+		logger.info("Entered value " + value);
 	}
 
 	// Method to enter a text box value Using the Actions (when using JQuery &
@@ -565,7 +580,7 @@ public class PageBase {
 		actions.click();
 		actions.sendKeys(value);
 		actions.build().perform();
-		System.out.println("Using Actions,Entered value:" + value);
+		logger.info("Using Actions,Entered value:" + value);
 	}
 
 	public void selectRadio(WebElement element) {
@@ -582,7 +597,18 @@ public class PageBase {
 		} else {
 			// Using the TestNG API for logging
 
-			System.out.println("Element: " + element.toString() + ", is not available on a page - ");
+			logger.info("Element: " + element.toString() + ", is not available on a page - ");
+		}
+	}
+
+	public void safeClick(By webelement) {
+		if ((byToWebElementConverter(webelement) != null) && (byToWebElementConverter(webelement).isDisplayed())) {
+			byToWebElementConverter(webelement).click();
+		} else {
+			// Using the TestNG API for logging
+
+			logger.info(
+					"Element: " + byToWebElementConverter(webelement).toString() + ", is not available on a page - ");
 		}
 	}
 
@@ -627,7 +653,7 @@ public class PageBase {
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("Cannot read the image file " + e.getMessage());
+			logger.info("Cannot read the image file " + e.getMessage());
 			ret = false;
 		}
 		return ret;
@@ -657,7 +683,7 @@ public class PageBase {
 			actions.click();
 			actions.build().perform();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.info(e.getMessage());
 			System.out.print("Failed to force click element" + e.getMessage());
 		}
 	}
@@ -678,7 +704,7 @@ public class PageBase {
 					Long r = (Long) ((JavascriptExecutor) driver).executeScript("return $.active");
 					return r == 0;
 				} catch (Exception e) {
-					System.out.println("no jquery present");
+					logger.info("no jquery present");
 					return true;
 				}
 			}
@@ -766,14 +792,14 @@ public class PageBase {
 					}).withMessage("Fluent wait in process");
 			String elementText = we.getText();
 
-			System.out.println("Clicking on webelement: " + elementText);
+			logger.info("Clicking on webelement: " + elementText);
 			Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
 
 				@Override
 				public Boolean apply(WebDriver arg0) {
 
 					if (we.isDisplayed() && we.isEnabled()) {
-						System.out.println("Element displayed is " + elementText);
+						logger.info("Element displayed is " + elementText);
 						return true;
 					} else {
 						return false;
@@ -793,13 +819,13 @@ public class PageBase {
 			// https://stackoverflow.com/questions/34562061/webdriver-click-vs-javascript-click
 
 		} catch (StaleElementReferenceException s) {
-			System.out.println("StaleElement exception for web element" + we.getText());
+			logger.info("StaleElement exception for web element" + we.getText());
 			refreshPage();
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].focus(); arguments[0].click();", we);
 
 		} catch (Exception e) {
-			System.out.println("SFClick exception for web element" + we.getText());
+			logger.info("SFClick exception for web element" + we.getText());
 
 		}
 	}
@@ -840,7 +866,7 @@ public class PageBase {
 		sleep(4000);
 
 		int size = driver.findElements(By.tagName("iframe")).size();
-		System.out.println("Number of iFrames detected " + size);
+		logger.info("Number of iFrames detected " + size);
 		driver.switchTo().frame(0);
 
 		element.sendKeys(filepath);
@@ -901,11 +927,11 @@ public class PageBase {
 						.release(webelement).build().perform();
 			}
 			Thread.sleep(500);
-			System.out.println("Success");
+			logger.info("Success");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Exception caught");
+			logger.info("Exception caught");
 			return false;
 
 		}
@@ -924,13 +950,13 @@ public class PageBase {
 		if (calen1.after(calen2)) {
 
 			// When Date d1 > Date d2
-			System.out.println(bdate + " is after " + adate);
+			logger.info(bdate + " is after " + adate);
 		}
 
 		else if (calen1.before(calen2)) {
 
 			// When Date d1 < Date d2
-			System.out.println(bdate + " is before " + adate);
+			logger.info(bdate + " is before " + adate);
 		}
 	}
 
@@ -961,12 +987,12 @@ public class PageBase {
 	 * {// As we are using the dynamic json file as a local data store, we can write
 	 * // data to it using this method
 	 * 
-	 * String sPath = new java.io.File(".").getCanonicalPath();
-	 * System.out.println("Path: " + sPath); File jsonFile = new File(sPath +
-	 * File.separator + "src" + File.separator + "main" + File.separator +
-	 * "resources" + File.separator + "dynamicdata.json");
+	 * String sPath = new java.io.File(".").getCanonicalPath(); logger.info("Path: "
+	 * + sPath); File jsonFile = new File(sPath + File.separator + "src" +
+	 * File.separator + "main" + File.separator + "resources" + File.separator +
+	 * "dynamicdata.json");
 	 * 
-	 * System.out.println("Writing URL variables to json file");
+	 * logger.info("Writing URL variables to json file");
 	 * 
 	 * DocumentContext doc = JsonPath.parse(jsonFile).
 	 * 

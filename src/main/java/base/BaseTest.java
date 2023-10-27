@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,12 +48,10 @@ public class BaseTest implements ExcelReader, PropertyReader {
 
 	protected OrangeLoginPage loginpage;
 	protected OrangeHRMHomePage homepage;
-
-	public static String SFBaseURL; // This is the base URL like https://test-ea.lightning.force.com/
-
-	protected static PageFactory pageFactory = null;
+	protected static URL huburl;
+	protected static PageFactory pageFactory;
 	protected Properties staticData = getStaticData();
-	protected URL huburl = null;// Setup GRID hub URL here or from properties file
+
 	protected static EmailUtils emailUtils;
 
 	public static String orangehrmurl;
@@ -59,14 +60,19 @@ public class BaseTest implements ExcelReader, PropertyReader {
 
 	@BeforeSuite(alwaysRun = true)
 	@Parameters({ "browserType" })
-	public void setupWebDriver(@Optional("chrome") String browserType) throws IOException {
+	public void setupWebDriver(@Optional("chrome") String browserType) throws IOException, URISyntaxException {
 		// Below lines can be uncommented to provide log level at fine grained scale for
 		// debugging Selenium WebDriver
 //		SeleniumLogger seleniumLogger = new SeleniumLogger();
 //		seleniumLogger.setLevel(Level.FINE);
-
+		try {
+			huburl = new URI("http://192.168.0.103:4444").toURL();
+			// Setup GRID hub URL here or from properties
+		} catch (MalformedURLException ex) {
+			logger.error(ex.getMessage());
+		}
 		if ((driver == null)) {
-			logger.info("setupWebDriver()");
+			logger.info("setupWebDriver()" + "With browser as " + browserType + " and HubURL as " + huburl);
 			driver = WebDriverFactory.createInstance(huburl, browserType);
 			action = new Actions(driver);
 			pageFactory = new PageFactory(driver);
@@ -120,30 +126,21 @@ public class BaseTest implements ExcelReader, PropertyReader {
 
 	@AfterClass(alwaysRun = true)
 	public void deleteAllCookies() {
-
 		// Handling windows after executing each class from Suite
 		try {
-
 			String originalHandle = driver.getWindowHandle();
-
 			for (String handle : driver.getWindowHandles()) {
 				if (!handle.equals(originalHandle)) {
 					driver.switchTo().window(handle);
 					driver.close();
 				}
 			}
-
 			driver.switchTo().window(originalHandle);
-
 		} catch (Exception e) {
-
 			logger.info("Error while closing child windows" + e.getMessage());
-
 		}
-
 		logger.info("Clearing all browser cookies...");
 		driver.manage().deleteAllCookies();
-
 	}
 
 	@AfterSuite(alwaysRun = true)

@@ -1,12 +1,7 @@
 package pageobjects;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import base.PageBase;
 
@@ -22,15 +17,12 @@ public class OrangeLoginPage extends PageBase {
 	}
 
 	public OrangeHRMHomePage login(String userid, String passwordtext) throws InterruptedException {
-		// Setting up Explicit wait
-		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(usernamelocator));
-		// Typing the username
+		explicitWait(usernamelocator, 20);
+		// We can optionally call driver methods directly here or optionally use common
+		// methods from PageBase
 		driver.findElement(usernamelocator).sendKeys(userid);
-		// Typing the password
 		driver.findElement(passwordlocator).sendKeys(passwordtext);
-		// Pressing the Login button
-		driver.findElement(loginlocator).click();
+		safeClick(loginlocator);
 		// Returning the instance of Homepage for fluent style of programming
 		return new OrangeHRMHomePage(driver);
 	}

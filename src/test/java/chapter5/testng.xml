@@ -3,17 +3,18 @@
 <suite name="Suite1" parallel="tests" thread-count="2">
  
   <test name="test on firefox">
-  <parameter name="browser" value="firefox"></parameter>
+  <parameter name="browser" value="firefox"/>
     <classes>
-      <class name="chapter5.LoginExample"/>
+      <class name="chapter5.Chapter05_LoginExample"/>
     </classes>
-  </test> <!-- Test1 -->
+  </test> 
   
   <test name="test on chrome">
-  <parameter name="browser" value="chrome"></parameter>
+  <parameter name="browser" value="chrome"/>
     <classes>
-      <class name="chapter5.LoginExample"/>
+      <class name="chapter5.Chapter05_LoginExample"/>
+<!--      <class name="chapter5.Chapter05_LoginTest"/> -->
     </classes>
-  </test> <!-- Test1 -->
+  </test>
   
-</suite> <!-- Suite1 -->
+</suite> 

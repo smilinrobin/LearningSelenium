@@ -216,7 +216,7 @@
 						<version>2.19</version>
 						<configuration>
 							<suiteXmlFiles>	<!-- Specify the TestNG XML file you want to run over here -->
-<!-- 								<suiteXmlFile>src/test/resources/all-tests-chrome.xml</suiteXmlFile> -->
+<!-- 								<suiteXmlFile>src/test/java/chapter5/testng.xml</suiteXmlFile> -->
 							</suiteXmlFiles>
 						</configuration>
 					</plugin>
