@@ -65,8 +65,10 @@ public class BaseTest implements ExcelReader, PropertyReader {
 		// debugging Selenium WebDriver
 //		SeleniumLogger seleniumLogger = new SeleniumLogger();
 //		seleniumLogger.setLevel(Level.FINE);
+
+		// Below lines should be uncommented to run tests in Grid
 		try {
-			huburl = new URI("http://192.168.0.103:4444").toURL();
+			huburl = new URI("http://localhost:4444/wd/hub").toURL();
 			// Setup GRID hub URL here or from properties
 		} catch (MalformedURLException ex) {
 			logger.error(ex.getMessage());

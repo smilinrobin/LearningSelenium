@@ -217,6 +217,7 @@
 						<configuration>
 							<suiteXmlFiles>	<!-- Specify the TestNG XML file you want to run over here -->
 <!-- 								<suiteXmlFile>src/test/java/chapter5/testng.xml</suiteXmlFile> -->
+<suiteXmlFile>src/test/java/chapter6/chapter6_testng.xml</suiteXmlFile>
 							</suiteXmlFiles>
 						</configuration>
 					</plugin>

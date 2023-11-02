@@ -709,6 +709,7 @@ public class PageBase {
 				}
 			}
 		};
+
 		ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
 			@Override
 			public Boolean apply(WebDriver driver) {
@@ -730,6 +731,31 @@ public class PageBase {
 		LocalDate localDate = LocalDate.now(ZoneId.of("America/New_York"));
 		return (etFormat.format(localDate));
 	}
+
+	// inspiration from
+	// https://gist.github.com/titusfortner/91056e8a70a2f356ae242dc4dd69e988#file-biditest-java
+//	public void waitForPageLoad() throws InterruptedException {
+//		DevTools devTools = ((HasDevTools) driver).getDevTools();
+//		devTools.createSession();
+//		devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+//
+//		Map<String, Object> requests = new ConcurrentHashMap<>();
+//		devTools.addListener(Network.requestWillBeSent(), r -> requests.put(r.getRequestId().toString(), r));
+//		devTools.addListener(Network.responseReceived(), r -> requests.remove(r.getRequestId().toString()));
+//
+//		long startTime = System.currentTimeMillis();
+//		int requestSize = requests.size();
+//
+//		while ((System.currentTimeMillis() - startTime) < 2000) {
+//			logger.info("Pending requests count: " + requests.size());
+//			if (requests.size() == requestSize) {
+//				Thread.sleep(200);
+//			} else {
+//				startTime = System.currentTimeMillis();
+//				requestSize = requests.size();
+//			}
+//		}
+//	}
 
 	public static By webElementToByValue(WebElement we) {
 		// By format = "[foundFrom] -> locator: term"

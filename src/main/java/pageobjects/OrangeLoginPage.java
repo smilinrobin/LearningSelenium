@@ -17,6 +17,7 @@ public class OrangeLoginPage extends PageBase {
 	}
 
 	public OrangeHRMHomePage login(String userid, String passwordtext) throws InterruptedException {
+		waitForJSandJQueryToLoad();
 		explicitWait(usernamelocator, 20);
 		// We can optionally call driver methods directly here or optionally use common
 		// methods from PageBase
