@@ -28,6 +28,12 @@
 	</properties>
 
 	<dependencies>
+	<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-grid</artifactId>
+    <version>4.11.0</version>
+</dependency>
+
 		<dependency>
 			<groupId>com.testzeus</groupId>
 			<artifactId>Test_Zeus</artifactId>

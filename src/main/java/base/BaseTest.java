@@ -68,10 +68,10 @@ public class BaseTest implements ExcelReader, PropertyReader {
 
 		// Below lines should be uncommented to run tests in Grid
 		try {
-			huburl = new URI("http://localhost:4444/wd/hub").toURL();
-			// Setup GRID hub URL here or from properties
+			huburl = new URI("http://localhost:4444").toURL();
+			// Setup GRID URL here or from properties
 		} catch (MalformedURLException ex) {
-			logger.error(ex.getMessage());
+			logger.error("Received error in converting URI to URL for Grid as " + ex.getMessage());
 		}
 		if ((driver == null)) {
 			logger.info("setupWebDriver()" + "With browser as " + browserType + " and HubURL as " + huburl);
