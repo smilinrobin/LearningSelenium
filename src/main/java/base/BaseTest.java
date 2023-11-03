@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -66,13 +64,13 @@ public class BaseTest implements ExcelReader, PropertyReader {
 //		SeleniumLogger seleniumLogger = new SeleniumLogger();
 //		seleniumLogger.setLevel(Level.FINE);
 
-		// Below lines should be uncommented to run tests in Grid
-		try {
-			huburl = new URI("http://localhost:4444").toURL();
-			// Setup GRID URL here or from properties
-		} catch (MalformedURLException ex) {
-			logger.error("Received error in converting URI to URL for Grid as " + ex.getMessage());
-		}
+		// Uncomment below lines of code for running tests on Grid in Chapter 6
+//		try {
+//			huburl = new URI("http://localhost:4444").toURL();
+//			// Setup GRID URL here or from properties
+//		} catch (MalformedURLException ex) {
+//			logger.error("Received error in converting URI to URL for Grid as " + ex.getMessage());
+//		}
 		if ((driver == null)) {
 			logger.info("setupWebDriver()" + "With browser as " + browserType + " and HubURL as " + huburl);
 			driver = WebDriverFactory.createInstance(huburl, browserType);

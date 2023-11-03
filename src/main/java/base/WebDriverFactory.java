@@ -12,8 +12,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 //import io.github.bonigarcia.wdm.WebDriverManager;
@@ -39,10 +37,11 @@ public class WebDriverFactory {
 				driver = new FirefoxDriver(createFirefoxProfile());
 			} else if (browserName.equalsIgnoreCase("chrome") && hubUrl == null) {
 				driver = new ChromeDriver();
-			} else if (browserName.equalsIgnoreCase("chrome") && hubUrl != null) {
-				DesiredCapabilities capabilities = new DesiredCapabilities();
-				capabilities.setCapability("browserName", "chrome");
-				driver = new RemoteWebDriver(hubUrl, capabilities);
+//		Uncomment below lines of code for running tests on Grid in Chapter 6
+// 			} else if (browserName.equalsIgnoreCase("chrome") && hubUrl != null) {
+//				DesiredCapabilities capabilities = new DesiredCapabilities();
+//				capabilities.setCapability("browserName", "chrome");
+//				driver = new RemoteWebDriver(hubUrl, capabilities);
 			} else if (browserName.equalsIgnoreCase("edge")) {
 				driver = new EdgeDriver();
 			} else if (browserName.equalsIgnoreCase("safari") && isSafariSupportedPlatform()) {
