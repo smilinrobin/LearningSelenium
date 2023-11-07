@@ -58,6 +58,13 @@
 			<artifactId>selenium-logger</artifactId>
 			<version>1.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.zaproxy/zap-clientapi -->
+<dependency>
+    <groupId>org.zaproxy</groupId>
+    <artifactId>zap-clientapi</artifactId>
+    <version>1.12.0</version>
+</dependency>
+		
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
