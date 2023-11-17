@@ -15,9 +15,10 @@ public class OrangeHRMLoginPage {
 	private By passwordlocator = By.xpath("//input[@placeholder='Password']");
 	private By loginlocator = By.xpath("//button[@type='submit']");
 
-	public OrangeHRMLoginPage(WebDriver driver) {
+	public OrangeHRMLoginPage(WebDriver driver) throws InterruptedException {
 		this.driver = driver;
 		// Validation for page
+		Thread.sleep(5000);
 		if (!driver.getTitle().equals("OrangeHRM")) {
 			throw new IllegalStateException("This is not Log In Page," + " current page is: " + driver.getCurrentUrl());
 		}

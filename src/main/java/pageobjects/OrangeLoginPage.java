@@ -10,6 +10,7 @@ public class OrangeLoginPage extends PageBase {
 	private By usernamelocator = By.xpath("//input[@placeholder='Username']");
 	private By passwordlocator = By.xpath("//input[@placeholder='Password']");
 	private By loginlocator = By.xpath("//button[@type='submit']");
+	private By errormessage = By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']");
 
 	public OrangeLoginPage(WebDriver webDriver) {
 		super(webDriver);
@@ -27,4 +28,12 @@ public class OrangeLoginPage extends PageBase {
 		// Returning the instance of Homepage for fluent style of programming
 		return new OrangeHRMHomePage(driver);
 	}
+
+	// This method will be used later in Chapter 8
+	public String getErrorMessage() throws InterruptedException {
+		waitForJSandJQueryToLoad();
+		explicitWait(errormessage, 20);
+		return driver.findElement(errormessage).getText();
+	}
+
 }
