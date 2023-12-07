@@ -1,6 +1,9 @@
 package base;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -15,6 +18,10 @@ import javax.mail.MessagingException;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
@@ -37,7 +44,7 @@ import testzeus.base.PageBase;
 🙏
 */
 
-public class BaseTest implements ExcelReader, PropertyReader {
+public class BaseTest implements PropertyReader {
 
 	public static final Logger logger = LogManager.getLogger();
 	protected static WebDriver driver;
@@ -196,16 +203,40 @@ public class BaseTest implements ExcelReader, PropertyReader {
 		return staticData;
 	}
 
-	@Override
-	public String excelValueReader(int row, int column) {
-		// TODO Auto-generated method stub
-		return null;
+	public static String excelValueReader(int row, int column) throws FileNotFoundException {
+		// Path of the excel file
+		FileInputStream fs = new FileInputStream("src\\main\\resources\\ExcelDemoFile.xlsx");
+		try (// Creating a workbook
+				XSSFWorkbook workbook = new XSSFWorkbook(fs)) {
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Row excelrow = sheet.getRow(row);
+			Cell cell = excelrow.getCell(column);
+			String cellval = cell.getStringCellValue();
+			return cellval;
+		} catch (IOException e) {
+			// TODO Replace with logging if required
+			System.out.println("Exception occured in excelValueReader" + e.getMessage());
+			return null;
+		}
 	}
 
-	@Override
-	public void excelValueWriter(int row, int column, String value) {
-		// TODO Auto-generated method stub
+	public static void excelValueWriter(int row, int column, String value) throws FileNotFoundException {
+		String path = "src\\main\\resources\\ExcelDemoFile.xlsx";
+		FileInputStream fs = new FileInputStream(path);
+		try (// Creating a workbook
+				XSSFWorkbook workbook = new XSSFWorkbook(fs)) {
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Row excelrow = sheet.getRow(row);
+			Cell cell = excelrow.getCell(column);
+			cell.setCellValue(value);
+			FileOutputStream fos = new FileOutputStream(path);
+			workbook.write(fos);
+			fos.close();
+		} catch (IOException e) {
+			// TODO Replace with logging if required
+			System.out.println("Exception occured in excelValueReader" + e.getMessage());
 
+		}
 	}
 
 }
