@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class Chapter05_LogExample {
 	@Test(priority = 1)
-	public void loginTest() throws Exception {
+	public void loggerTest() throws Exception {
 		final Logger logger = LogManager.getLogger();
 
 		logger.trace("Entering method processOrder().");

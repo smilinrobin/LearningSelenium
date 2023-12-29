@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
  */
 public class Chapter04_JSExecutor {
 	@Test(priority = 1)
-	public void scrollIntoView() throws Exception {
+	public void jsExecutorTest() throws Exception {
 		// Creating a webdriver instance
 		WebDriver driver = new ChromeDriver();
 
