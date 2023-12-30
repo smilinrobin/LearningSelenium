@@ -1,4 +1,4 @@
-package chapter06;
+package chapter6;
 
 import java.net.URL;
 

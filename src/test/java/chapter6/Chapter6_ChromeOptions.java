@@ -1,4 +1,4 @@
-package chapter06;
+package chapter6;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
-public class Chapter06_ChromeOptions {
+public class Chapter6_ChromeOptions {
 
 	@Test(priority = 1)
 	public void optionsTest() throws Exception {

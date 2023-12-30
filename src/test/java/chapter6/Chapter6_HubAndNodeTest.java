@@ -1,4 +1,4 @@
-package chapter06;
+package chapter6;
 
 import java.net.URL;
 
@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Test;
 
-public class Chapter06_HubAndNodeTest {
+public class Chapter6_HubAndNodeTest {
 
 	@Test(priority = 1)
 	public void chromeGridTest() throws Exception {

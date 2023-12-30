@@ -1,11 +1,11 @@
-package chapter06;
+package chapter6;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
 
-public class Chapter06_LoginTest extends BaseTest {
+public class Chapter6_LoginTest extends BaseTest {
 
 	@Test(priority = 1)
 	public void loginTest() throws Exception {
