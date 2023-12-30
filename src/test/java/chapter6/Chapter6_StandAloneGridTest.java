@@ -8,7 +8,7 @@ import org.openqa.selenium.net.PortProber;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Test;
 
-public class Chapter06_StandAloneGridTest {
+public class Chapter6_StandAloneGridTest {
 
 	@Test(priority = 1)
 	public void gridTest() throws Exception {

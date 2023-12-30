@@ -1,1 +1,1 @@
-package chapter06;
+package chapter6;
